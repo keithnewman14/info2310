@@ -1,6 +1,9 @@
 Info2310::Application.routes.draw do
-  resources :users
+  resources :micro_posts
 
+
+  resources :users, :micro_posts
+	
 
   get "static_pages/home"
 
