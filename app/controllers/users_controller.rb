@@ -1,4 +1,8 @@
 class UsersController < ApplicationController
+  
+  before_filter :redirect_home_if_signed_in, only: [:new, :create]
+  before_filter :redirect_unless_authorized, only: [:edit, :update, :destroy]
+  
   # GET /users
   # GET /users.json
   def index
@@ -79,5 +83,17 @@ class UsersController < ApplicationController
       format.html { redirect_to users_url }
       format.json { head :no_content }
     end
+  end
+  
+  private 
+	def redirect_unless_authorized
+      @user = User.find(params[:id])
+	  if current_user != @user
+		flash[:error] = "You are not authorized to edit that user"
+		redirect_to root_path
+      # Write some code here that redirects home 
+      # and displays an error message "You are not authorized
+      # to edit that user" if the current_user is not equal to @user
+	  end
   end
 end
