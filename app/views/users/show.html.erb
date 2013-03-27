@@ -1,7 +1,3 @@
-
-
-<p id="notice"><%= notice %></p>
-
 <p>
   <b>Name:</b>
   <%= @user.name %>
@@ -12,14 +8,19 @@
   <%= @user.email %>
 </p>
 
+<% if signed_in? %>
+ <%= render 'follow_form' %>
+<% end %>
+
 <p>
   <%= pluralize(@user.micro_posts.length, "MicroPost") %>
 </p>
 
-<%= will_paginate @collection %>
-<%= render @collection %>
-<%= will_paginate @collection %>
+<%= will_paginate @micro_posts %>
+
+<%= render @micro_posts %>
+
+<%= will_paginate @micro_posts %>
 
 <%= link_to 'Edit', edit_user_path(@user) %> |
 <%= link_to 'Back', users_path %>
-
